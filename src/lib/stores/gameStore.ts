@@ -39,7 +39,6 @@ export const inQuiz = writable<boolean>(false);
 export const currentQuestion = writable<Question | null>(null);
 export const answered = writable<boolean>(false);
 export const userAnswer = writable<string>('');
-export const blurAmount = writable<number>(0);
 
 // Configuración persistente
 function createSettings() {
@@ -76,14 +75,12 @@ export const timerPercentage = derived(timer, ($timer) => {
   return Math.min(($timer / maxTime) * 100, 100);
 });
 
-// Derivar blurAmount del timer
-$: {
+// Derivar blurAmount del timer usando un store derivado
+export const blurAmount = derived(timer, ($timer) => {
   const maxTime = 10;
   const maxBlur = 15;
-  const currentTime = get(timer);
-  const newBlur = Math.max(0, maxBlur - (currentTime * (maxBlur / maxTime)));
-  blurAmount.set(newBlur);
-}
+  return Math.max(0, maxBlur - ($timer * (maxBlur / maxTime)));
+});
 
 // Funciones de utilidad
 export function resetGame() {
@@ -94,7 +91,6 @@ export function resetGame() {
   currentQuestion.set(null);
   answered.set(false);
   userAnswer.set('');
-  blurAmount.set(0);
 }
 
 export async function startQuiz(category: string) {
@@ -104,7 +100,6 @@ export async function startQuiz(category: string) {
   inQuiz.set(true);
   answered.set(false);
   userAnswer.set('');
-  blurAmount.set(15);
   
   // Extraer género y dificultad de la categoría
   const [genre, difficulty] = category.split('_');
@@ -128,7 +123,6 @@ export async function loadNextQuestion() {
   answered.set(false);
   userAnswer.set('');
   timer.set(0);
-  blurAmount.set(15);
   
   const category = get(selectedKey);
   const [genre, difficulty] = category.split('_');

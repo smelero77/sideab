@@ -31,9 +31,9 @@
       <img
         src={$currentQuestion.imageUrl}
         alt="Portada del álbum"
-        class="w-full h-full object-cover transition-all duration-500 ease-out"
+        class="w-full h-full object-cover"
         class:error={imageError}
-        style="filter: blur({$blurAmount}px);"
+        style="filter: blur({$blurAmount}px); transition: filter 0.2s linear;"
         on:error={handleImageError}
         on:load={handleImageLoad}
         in:fade={{ duration: 300 }}
