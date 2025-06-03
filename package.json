@@ -26,6 +26,7 @@
 		"vite": "^5.0.0"
 	},
 	"dependencies": {
+		"nanoid": "^5.1.5",
 		"node-fetch": "^2.7.0"
 	}
 }

@@ -3,36 +3,125 @@
 @tailwind utilities;
 
 :root {
-  --bg-color: #111827;
-  --text-color: #f3f4f6;
-  --accent-color: #6366f1;
+  /* Colores base */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f3f4f6;
+  --bg-tertiary: #e5e7eb;
+  
+  /* Colores de texto */
+  --text-primary: #111827;
+  --text-secondary: #374151;
+  --text-tertiary: #6b7280;
+  
+  /* Colores de acento */
+  --accent-primary: #6366f1;
+  --accent-hover: #4f46e5;
+  --accent-active: #4338ca;
+  
+  /* Estados */
+  --success-bg: #10b981;
+  --success-text: #ecfdf5;
+  --warning-bg: #f59e0b;
+  --warning-text: #fffbeb;
+  --error-bg: #ef4444;
+  --error-text: #fef2f2;
+  --info-bg: #3b82f6;
+  --info-text: #eff6ff;
+  
+  /* Bordes y sombras */
+  --border-color: #e5e7eb;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+.dark {
+  /* Colores base */
+  --bg-primary: #111827;
+  --bg-secondary: #1f2937;
+  --bg-tertiary: #374151;
+  
+  /* Colores de texto */
+  --text-primary: #f3f4f6;
+  --text-secondary: #d1d5db;
+  --text-tertiary: #9ca3af;
+  
+  /* Colores de acento */
+  --accent-primary: #6366f1;
+  --accent-hover: #4f46e5;
+  --accent-active: #4338ca;
+  
+  /* Estados */
+  --success-bg: #10b981;
+  --success-text: #ecfdf5;
+  --warning-bg: #f59e0b;
+  --warning-text: #fffbeb;
+  --error-bg: #ef4444;
+  --error-text: #fef2f2;
+  --info-bg: #3b82f6;
+  --info-text: #eff6ff;
+  
+  /* Bordes y sombras */
+  --border-color: #374151;
+  --shadow-color: rgba(0, 0, 0, 0.25);
 }
 
 .theme-neon {
-  --bg-color: #0f172a;
-  --text-color: #e0e7ff;
-  --accent-color: #a78bfa;
+  /* Colores base */
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  
+  /* Colores de texto */
+  --text-primary: #e0e7ff;
+  --text-secondary: #c4b5fd;
+  --text-tertiary: #a78bfa;
+  
+  /* Colores de acento */
+  --accent-primary: #a78bfa;
+  --accent-hover: #8b5cf6;
+  --accent-active: #7c3aed;
+  
+  /* Estados */
+  --success-bg: #34d399;
+  --success-text: #ecfdf5;
+  --warning-bg: #fbbf24;
+  --warning-text: #fffbeb;
+  --error-bg: #f87171;
+  --error-text: #fef2f2;
+  --info-bg: #60a5fa;
+  --info-text: #eff6ff;
+  
+  /* Bordes y sombras */
+  --border-color: #334155;
+  --shadow-color: rgba(167, 139, 250, 0.25);
 }
 
 body {
-  background-color: var(--bg-color);
-  color: var(--text-color);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 @layer components {
   .btn {
-    @apply py-2 px-4 rounded-lg transition-all duration-200 transform hover:-translate-y-0.5;
+    @apply py-2 px-4 rounded-lg transition-all duration-200 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-bg-primary;
   }
   
   .btn-primary {
-    @apply bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg;
+    @apply bg-accent-primary hover:bg-accent-hover active:bg-accent-active text-text-primary shadow-lg;
   }
   
   .btn-success {
-    @apply bg-green-500 hover:bg-green-600 text-white shadow-lg;
+    @apply bg-success-bg hover:bg-success-bg text-success-text shadow-lg hover:opacity-90;
   }
   
   .btn-warning {
-    @apply bg-yellow-500 hover:bg-yellow-600 text-white shadow-lg;
+    @apply bg-warning-bg hover:bg-warning-bg text-warning-text shadow-lg hover:opacity-90;
+  }
+  
+  .btn-error {
+    @apply bg-error-bg hover:bg-error-bg text-error-text shadow-lg hover:opacity-90;
+  }
+  
+  .btn-info {
+    @apply bg-info-bg hover:bg-info-bg text-info-text shadow-lg hover:opacity-90;
   }
 } 
