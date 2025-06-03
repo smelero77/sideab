@@ -7,6 +7,7 @@
   --bg-primary: #ffffff;
   --bg-secondary: #f3f4f6;
   --bg-tertiary: #e5e7eb;
+  --layout-bg: #171717;
   
   /* Colores de texto */
   --text-primary: #111827;
@@ -38,6 +39,7 @@
   --bg-primary: #111827;
   --bg-secondary: #1f2937;
   --bg-tertiary: #374151;
+  --layout-bg: #171717;
   
   /* Colores de texto */
   --text-primary: #f3f4f6;
@@ -98,6 +100,14 @@
 body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
+  font-family: 'Barlow', sans-serif;
+}
+
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold;
+    font-family: 'Barlow Condensed', sans-serif;
+  }
 }
 
 @layer components {

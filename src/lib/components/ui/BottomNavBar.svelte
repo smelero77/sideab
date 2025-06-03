@@ -20,7 +20,7 @@
   $: currentPath = $page.url.pathname;
 </script>
 
-<nav class="fixed bottom-0 left-0 right-0 h-16 bg-bg-secondary border-t border-bg-tertiary shadow-top-md z-50">
+<nav class="fixed bottom-0 left-0 right-0 h-16 bg-bg-secondary shadow-top-md z-50">
   <div class="flex justify-around items-center h-full max-w-md mx-auto">
     {#each navItems as item}
       <a
@@ -37,9 +37,6 @@
         <span class="text-xs {currentPath.startsWith(item.path) ? 'text-accent-primary' : 'text-text-secondary group-hover:text-accent-primary group-focus:text-accent-primary'}">
           {item.label}
         </span>
-        {#if currentPath.startsWith(item.path)}
-          <div class="absolute -top-px left-1/2 -translate-x-1/2 w-8 h-0.5 bg-accent-primary rounded-full"></div>
-        {/if}
       </a>
     {/each}
   </div>

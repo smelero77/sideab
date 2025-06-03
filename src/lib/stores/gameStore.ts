@@ -18,6 +18,10 @@ export interface GameSettings {
   theme: 'dark' | 'neon';
   defaultDifficulty: 'easy' | 'hard';
   showSettings: boolean;
+  difficulty: 'easy' | 'medium' | 'hard';
+  timeLimit: string;
+  soundEnabled: boolean;
+  musicEnabled: boolean;
 }
 
 // Categorías disponibles
@@ -45,7 +49,11 @@ function createSettings() {
   const defaultSettings: GameSettings = {
     theme: 'dark',
     defaultDifficulty: 'easy',
-    showSettings: false
+    showSettings: false,
+    difficulty: 'medium',
+    timeLimit: '60',
+    soundEnabled: true,
+    musicEnabled: true
   };
 
   const { subscribe, set, update } = writable<GameSettings>(defaultSettings, () => {

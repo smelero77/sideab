@@ -25,7 +25,6 @@
   import TimerBar from '$lib/components/TimerBar.svelte';
   import ScoreDisplay from '$lib/components/ScoreDisplay.svelte';
   import GameOverModal from '$lib/components/GameOverModal.svelte';
-  import SettingsPanel from '$lib/components/SettingsPanel.svelte';
 
   let timerInterval: ReturnType<typeof setInterval>;
 
@@ -105,7 +104,7 @@
   }
 </script>
 
-<main class="min-h-screen bg-gray-900 text-white relative">
+<main class="min-h-screen bg-black text-white relative">
   <Header />
   
   <div class="container mx-auto px-4 py-8">
@@ -157,4 +156,3 @@
     <GameOverModal />
   </div>
 {/if}
-<SettingsPanel />

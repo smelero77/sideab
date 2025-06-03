@@ -1,23 +1,30 @@
 import { writable } from 'svelte/store';
 
-export const isMenuOpen = writable(false);
+// Creamos el store con un valor inicial
+const createMenuStore = () => {
+    const { subscribe, set, update } = writable(false);
 
-export function toggleMenu() {
-  console.log('toggleMenu called');
-  isMenuOpen.update(value => {
-    console.log('Current value:', value);
-    const newValue = !value;
-    console.log('New value:', newValue);
-    return newValue;
-  });
-}
+    return {
+        subscribe,
+        open: () => {
+            console.log('Abriendo menú...');
+            set(true);
+            console.log('Estado después de abrir:', true);
+        },
+        close: () => {
+            console.log('Cerrando menú...');
+            set(false);
+            console.log('Estado después de cerrar:', false);
+        },
+        toggle: () => {
+            console.log('Alternando menú...');
+            update(value => {
+                const newValue = !value;
+                console.log('Estado actual:', value, 'Nuevo estado:', newValue);
+                return newValue;
+            });
+        }
+    };
+};
 
-export function openMenu() {
-  console.log('openMenu called');
-  isMenuOpen.set(true);
-}
-
-export function closeMenu() {
-  console.log('closeMenu called');
-  isMenuOpen.set(false);
-} 
+export const menu = createMenuStore(); 
