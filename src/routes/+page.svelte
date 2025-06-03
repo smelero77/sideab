@@ -17,7 +17,6 @@
   import type { Question } from '$lib/stores/gameStore';
   import { get } from 'svelte/store';
   
-  import Header from '$lib/components/Header.svelte';
   import CategorySelect from '$lib/components/CategorySelect.svelte';
   import CoverReveal from '$lib/components/CoverReveal.svelte';
   import OptionButton from '$lib/components/OptionButton.svelte';
@@ -104,9 +103,7 @@
   }
 </script>
 
-<main class="min-h-screen bg-black text-white relative">
-  <Header />
-  
+<main class="min-h-screen bg-black text-white">
   <div class="container mx-auto px-4 py-8">
     {#if !$inQuiz}
       <div class="max-w-md mx-auto space-y-8">

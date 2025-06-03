@@ -1,5 +1,4 @@
 <script lang="ts">
-  export let height = '160px';
   export let lines = 2;
 </script>
 

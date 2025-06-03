@@ -54,6 +54,13 @@
         menu.close();
       }
     }}
+    on:keydown|stopPropagation={(e) => {
+      if ($menu && (e.key === 'Escape' || e.key === 'Enter')) {
+        menu.close();
+      }
+    }}
+    role="button"
+    tabindex="0"
   >
     <div class="pt-[4rem]"> 
       <!-- Empujamos el contenido hacia abajo para no tapar el Header -->
