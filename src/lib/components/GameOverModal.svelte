@@ -1,72 +1,76 @@
 <script lang="ts">
-  import { score, timer, lives, settings } from '$lib/stores/gameStore';
+  import { GameManager } from '$lib/game/GameManager';
   import { fade, scale } from 'svelte/transition';
-  import { startQuiz } from '$lib/stores/gameStore';
+  import Modal from '$lib/components/ui/Modal.svelte';
+  import Button from '$lib/components/ui/Button/Button.svelte';
+  import Card from '$lib/components/ui/Card/Card.svelte';
+  import Badge from '$lib/components/ui/Badge.svelte';
+
+  const gameManager = GameManager.getInstance();
+  const { currentGame } = gameManager;
 
   function shareScore() {
-    const shareText = encodeURIComponent(`¡He conseguido ${$score} puntos en Cover-Guess Quiz!`);
+    const shareText = encodeURIComponent(`¡He conseguido ${currentGame?.score} puntos en Cover-Guess Quiz!`);
     const url = encodeURIComponent(window.location.href);
     window.open(`https://twitter.com/intent/tweet?text=${shareText}&url=${url}`, '_blank');
   }
 
   function closeModal() {
-    settings.update(s => ({ ...s, showSettings: false }));
+    gameManager.showSettings = true;
+  }
+
+  async function handleStartQuiz() {
+    await gameManager.startGame();
   }
 </script>
 
-<div 
-  class="fixed inset-0 bg-black/50 flex items-center justify-center"
-  in:fade={{ duration: 300 }}
->
-  <div 
-    class="bg-gray-900 text-white rounded-3xl p-8 w-80 shadow-2xl relative"
-    in:scale={{ duration: 300, start: 0.95 }}
-  >
+<Modal on:close={closeModal}>
+  <Card variant="elevated" padding="lg" className="w-80">
     <h2 class="text-3xl font-extrabold mb-4">¡Fin del Juego!</h2>
     
-    <div class="space-y-2 mb-6">
-      <p>Puntuación final: <span class="text-indigo-400">{$score}</span></p>
-      <p>Tiempo transcurrido: <span class="text-indigo-400">{$timer}s</span></p>
-      <p>
-        Precisión:
-        <span class="text-indigo-400">
-          {Math.round(($score / 10) * 100)}%
-        </span>
-      </p>
+    <div class="space-y-4 mb-6">
+      <div class="flex items-center justify-between">
+        <span>Puntuación final:</span>
+        <Badge variant="primary" size="lg">{currentGame?.score}</Badge>
+      </div>
+      
+      <div class="flex items-center justify-between">
+        <span>Tiempo transcurrido:</span>
+        <Badge variant="info" size="lg">{currentGame?.timer}s</Badge>
+      </div>
+      
+      <div class="flex items-center justify-between">
+        <span>Precisión:</span>
+        <Badge variant="success" size="lg">
+          {Math.round((currentGame?.score ?? 0 / 10) * 100)}%
+        </Badge>
+      </div>
     </div>
 
     <div class="space-y-3">
-      <button
-        on:click={startQuiz}
-        class="w-full py-2 bg-indigo-600 rounded-lg shadow-lg 
-               hover:bg-indigo-700 transition duration-200 transform hover:-translate-y-0.5"
+      <Button
+        variant="primary"
+        fullWidth
+        on:click={handleStartQuiz}
       >
         Jugar de nuevo
-      </button>
+      </Button>
       
-      <button
+      <Button
+        variant="success"
+        fullWidth
         on:click={shareScore}
-        class="w-full py-2 bg-green-500 rounded-lg shadow-lg 
-               hover:bg-green-600 transition duration-200 transform hover:-translate-y-0.5"
       >
         Compartir
-      </button>
+      </Button>
       
-      <button
-        on:click={() => settings.update(s => ({ ...s, showSettings: true }))}
-        class="w-full py-2 bg-yellow-500 rounded-lg shadow-lg 
-               hover:bg-yellow-600 transition duration-200 transform hover:-translate-y-0.5"
+      <Button
+        variant="warning"
+        fullWidth
+        on:click={() => gameManager.showSettings = true}
       >
         Ajustes
-      </button>
+      </Button>
     </div>
-
-    <button
-      on:click={closeModal}
-      class="absolute top-3 right-3 text-gray-400 hover:text-white"
-      aria-label="Cerrar"
-    >
-      ✕
-    </button>
-  </div>
-</div> 
+  </Card>
+</Modal> 

@@ -82,11 +82,6 @@
 </aside>
 
 <style>
-    .transform {
-        will-change: transform;
-        backface-visibility: hidden;
-        transform-style: preserve-3d;
-    }
     .scrollbar-none {
         -ms-overflow-style: none;
         scrollbar-width: none;

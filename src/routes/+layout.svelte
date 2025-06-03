@@ -5,9 +5,12 @@
   import Header from '$lib/components/layout/Header.svelte';
   import Sidebar from '$lib/components/layout/Sidebar.svelte';
   import '../app.css';
-  import { settings } from '$lib/stores/gameStore';
+  import { GameManager } from '$lib/game/GameManager';
   import ThemeToggle from '$lib/components/ui/ThemeToggle.svelte';
   import ToastContainer from '$lib/components/ui/ToastContainer.svelte';
+  import Card from '$lib/components/ui/Card/Card.svelte';
+
+  const gameManager = GameManager.getInstance();
 
   // Para cerrar el menú al cambiar de ruta
   let previousPath = $page.url.pathname;
@@ -49,11 +52,7 @@
       transition-all duration-500 ease-in-out
       {$menu ? 'translate-x-[420px] translate-y-[2.5rem] scale-[0.8] rounded-xl md:translate-x-[520px] md:translate-y-[6.875rem] md:rounded-[20px]' : 'translate-x-0 translate-y-0 scale-100 rounded-none'}
     "
-    on:click|stopPropagation={() => {
-      if ($menu) {
-        menu.close();
-      }
-    }}
+    on:click|stopPropagation={() => $menu && menu.close()}
     on:keydown|stopPropagation={(e) => {
       if ($menu && (e.key === 'Escape' || e.key === 'Enter')) {
         menu.close();
@@ -63,8 +62,9 @@
     tabindex="0"
   >
     <div class="pt-[4rem]"> 
-      <!-- Empujamos el contenido hacia abajo para no tapar el Header -->
-      <slot />
+      <Card variant="elevated" padding="lg">
+        <slot />
+      </Card>
     </div>
   </div>
 </div>

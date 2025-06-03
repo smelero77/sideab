@@ -1,62 +1,51 @@
 <script lang="ts">
-  import { gameStore } from '$stores/game';
-  import type { Question } from '$lib/types';
+  import { createEventDispatcher } from 'svelte';
+  import { 
+    answered, 
+    userAnswer, 
+    currentQuestion 
+  } from '$lib/stores/gameStore';
+  import type { Question } from '$lib/stores/gameStore';
+  import Button from '$lib/components/ui/Button/Button.svelte';
+  import Card from '$lib/components/ui/Card/Card.svelte';
 
   export let question: Question;
-  export let onAnswer: (option: string) => void;
+  
+  const dispatch = createEventDispatcher<{
+    answer: string;
+  }>();
 
   function handleClick(option: string) {
-    if ($gameStore.answered) return;
-    onAnswer(option);
+    if ($answered) return;
+    dispatch('answer', option);
   }
 </script>
 
-<div class="options-container">
-  {#each question.options as option}
-    <button
-      class="option-button"
-      class:selected={$gameStore.userAnswer === option}
-      class:correct={$gameStore.answered && option === question.correctTitle}
-      class:wrong={$gameStore.answered && option === $gameStore.userAnswer && option !== question.correctTitle}
-      on:click={() => handleClick(option)}
-      disabled={$gameStore.answered}
-    >
-      {option}
-    </button>
-  {/each}
-</div>
+<Card variant="bordered" padding="md" className="max-w-2xl mx-auto">
+  <div class="grid gap-4">
+    {#each question.options as option}
+      <Button
+        variant={$answered && option === question.correctTitle ? 'success' : 
+                $answered && option === $userAnswer && option !== question.correctTitle ? 'error' :
+                $userAnswer === option ? 'primary' : 'info'}
+        fullWidth
+        disabled={$answered}
+        on:click={() => handleClick(option)}
+        className="text-left justify-start"
+      >
+        {option}
+      </Button>
+    {/each}
+  </div>
+</Card>
 
 <style>
-  .options-container {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    padding: 1rem;
-    max-width: 500px;
-    margin: 0 auto;
-  }
-
-  .option-button {
-    width: 100%;
-    padding: 1rem;
-    border: none;
-    border-radius: 8px;
-    background: #f5f5f5;
-    color: #333;
-    font-size: 1rem;
-    text-align: left;
-    cursor: pointer;
-    transition: all 0.3s ease;
+  :global(.btn) {
     position: relative;
     overflow: hidden;
   }
 
-  .option-button:hover:not(:disabled) {
-    background: #e0e0e0;
-    transform: translateY(-1px);
-  }
-
-  .option-button::after {
+  :global(.btn::after) {
     content: '';
     position: absolute;
     top: 0;
@@ -68,36 +57,27 @@
     transition: transform 0.3s ease;
   }
 
-  .option-button:hover::after {
+  :global(.btn:hover:not(:disabled)::after) {
     transform: translateX(100%);
   }
 
-  .selected {
-    background: #e3f2fd;
-  }
-
-  .correct {
-    background: #c8e6c9;
+  :global(.btn-success) {
     animation: correct-answer 0.5s ease-out;
   }
 
-  .wrong {
-    background: #ffcdd2;
+  :global(.btn-error) {
     animation: wrong-answer 0.5s ease-out;
   }
 
   @keyframes correct-answer {
     0% {
       transform: scale(1);
-      background-color: #c8e6c9;
     }
     50% {
       transform: scale(1.05);
-      background-color: #4caf50;
     }
     100% {
       transform: scale(1);
-      background-color: #c8e6c9;
     }
   }
 
@@ -110,17 +90,6 @@
     }
     75% {
       transform: translateX(5px);
-    }
-  }
-
-  @media (max-width: 768px) {
-    .options-container {
-      padding: 0.5rem;
-    }
-
-    .option-button {
-      padding: 0.75rem;
-      font-size: 0.9rem;
     }
   }
 </style> 

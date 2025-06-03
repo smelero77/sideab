@@ -1,21 +1,33 @@
 <script lang="ts">
-  import { gameStore } from '$stores/game';
+  import { lives, score, timer } from '$lib/stores/gameStore';
+  import Card from '$lib/components/ui/Card/Card.svelte';
+  import Badge from '$lib/components/ui/Badge.svelte';
 </script>
 
-<div class="status-container">
-  <div class="status-item">
-    <span class="label">Lives:</span>
-    <span class="value">{$gameStore.lives}</span>
+<Card variant="bordered" padding="md" className="max-w-2xl mx-auto">
+  <div class="grid grid-cols-3 gap-4">
+    <div class="flex flex-col items-center">
+      <Badge variant="warning" size="md" className="mb-2">
+        Lives
+      </Badge>
+      <span class="text-2xl font-bold">{$lives}</span>
+    </div>
+    
+    <div class="flex flex-col items-center">
+      <Badge variant="primary" size="md" className="mb-2">
+        Score
+      </Badge>
+      <span class="text-2xl font-bold">{$score}</span>
+    </div>
+    
+    <div class="flex flex-col items-center">
+      <Badge variant="info" size="md" className="mb-2">
+        Time
+      </Badge>
+      <span class="text-2xl font-bold">{$timer}s</span>
+    </div>
   </div>
-  <div class="status-item">
-    <span class="label">Score:</span>
-    <span class="value">{$gameStore.score}</span>
-  </div>
-  <div class="status-item">
-    <span class="label">Time:</span>
-    <span class="value">{$gameStore.timer}s</span>
-  </div>
-</div>
+</Card>
 
 <style>
   .status-container {
