@@ -96,9 +96,6 @@
     class:translate-y-[2.5rem]={$menu}
     class:md:translate-x-[30rem]={$menu}
     class:md:translate-y-[6.875rem]={$menu}
-    on:click|stopPropagation={() => {
-      if ($menu) menu.close();
-    }}
   >
     <div class="h-full">
       <slot />

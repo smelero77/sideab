@@ -1,6 +1,6 @@
 <script lang="ts">
     import { menu } from '$lib/stores/menuStore';
-    import { clickOutside } from '$lib/actions/clickOutside';
+    // import { clickOutside } from '$lib/actions/clickOutside';
 
     const menuItems = [
         { href: '#premium', label: 'Premium' },
@@ -20,7 +20,7 @@
     $: console.log('Estado del menú en sidebar:', $menu);
 </script>
 
-<!-- Fondo que ocupa toda la página -->
+<!-- Fondo que ocupa toda la página (solo visual) -->
 <div class="fixed inset-0 bg-neutral-900 z-10" />
 
 <aside
@@ -32,11 +32,6 @@
         p-0 flex flex-col
         font-['Barlow_Condensed',sans-serif]
     "
-    use:clickOutside={() => {
-        if ($menu) {
-            menu.close();
-        }
-    }}
     aria-hidden={!$menu}
     inert={!$menu}
 >
