@@ -41,10 +41,10 @@
                 <li class="font-['Barlow',sans-serif] font-semibold w-full text-[20px] md:text-[23px] border-t border-[#313131]">
                     <a 
                         href={item.href} 
-                        class="flex justify-between items-center w-full leading-[1.2] py-8 text-white transition-colors duration-[0.22s] ease-out"
+                        class="flex justify-between items-center w-full leading-[1.2] py-8 text-white hover:text-accent transition-colors duration-[0.22s] ease-out group no-underline"
                     >
                         {item.label}
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 text-text-secondary group-hover:text-accent transition-colors duration-[0.22s] ease-out">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                         </svg>
                     </a>
@@ -57,7 +57,7 @@
                     <li class="font-['Barlow',sans-serif] font-semibold w-full text-[18px]">
                         <a 
                             href={item.href} 
-                            class="flex justify-between items-center w-full leading-[1.2] py-3 text-[#cacaca] hover:text-white transition-colors duration-[0.22s] ease-out"
+                            class="flex justify-between items-center w-full leading-[1.2] py-3 text-[#cacaca] hover:text-accent transition-colors duration-[0.22s] ease-out no-underline"
                         >
                             {item.label}
                         </a>
