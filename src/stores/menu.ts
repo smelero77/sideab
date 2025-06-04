@@ -1,6 +1,7 @@
 import { writable } from 'svelte/store';
 
-export const isMenuOpen = writable(false);
+// Inicializamos el store con false para que el menú esté cerrado por defecto en móviles
+export const isMenuOpen = writable<boolean>(false);
 
 export function toggleMenu() {
     isMenuOpen.update(value => !value);

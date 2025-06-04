@@ -4,27 +4,27 @@
   import Badge from '$lib/components/ui/Badge.svelte';
 </script>
 
-<Card variant="bordered" padding="md" className="max-w-2xl mx-auto">
-  <div class="grid grid-cols-3 gap-4">
+<Card variant="bordered" padding="md" className="w-full max-w-2xl mx-auto">
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
     <div class="flex flex-col items-center">
       <Badge variant="warning" size="md" className="mb-2">
         Lives
       </Badge>
-      <span class="text-2xl font-bold">{$lives}</span>
+      <span class="text-xl md:text-2xl font-bold">{$lives}</span>
     </div>
     
     <div class="flex flex-col items-center">
       <Badge variant="primary" size="md" className="mb-2">
         Score
       </Badge>
-      <span class="text-2xl font-bold">{$score}</span>
+      <span class="text-xl md:text-2xl font-bold">{$score}</span>
     </div>
     
     <div class="flex flex-col items-center">
       <Badge variant="info" size="md" className="mb-2">
         Time
       </Badge>
-      <span class="text-2xl font-bold">{$timer}s</span>
+      <span class="text-xl md:text-2xl font-bold">{$timer}s</span>
     </div>
   </div>
 </Card>

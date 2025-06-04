@@ -10,6 +10,9 @@
   
   /* Color de acento */
   --color-accent: #1DBFC9;
+  --accent-r: 29;
+  --accent-g: 191;
+  --accent-b: 201;
   
   /* Grises de soporte */
   --grey-dark: #1A1A1A;
@@ -161,4 +164,26 @@ body {
   footer a {
     color: var(--color-accent);
   }
+}
+
+/* Clases de utilidad para botones */
+.btn-gradient-accent {
+  background: linear-gradient(
+    90deg,
+    rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.8) 0%,
+    rgba(var(--accent-r), var(--accent-g), var(--accent-b), 1) 100%
+  );
+}
+
+.btn-shadow-accent {
+  box-shadow: 0 4px 6px rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.3);
+  transition: box-shadow 0.2s ease-out;
+}
+
+.btn-shadow-accent:hover {
+  box-shadow: 0 8px 12px rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.45);
+}
+
+.text-on-accent {
+  color: var(--color-bg);
 } 

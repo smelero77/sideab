@@ -10,11 +10,11 @@
   export let showCloseButton = true;
 
   const sizeClasses = {
-    sm: 'max-w-sm',
-    md: 'max-w-md',
-    lg: 'max-w-lg',
-    xl: 'max-w-xl',
-    full: 'max-w-full'
+    sm: 'w-[90%] sm:w-[400px]',
+    md: 'w-[90%] sm:w-[500px]',
+    lg: 'w-[90%] sm:w-[600px]',
+    xl: 'w-[90%] sm:w-[800px]',
+    full: 'w-[95%] sm:w-[95%]'
   };
 
   function handleKeydown(event: KeyboardEvent) {
@@ -59,7 +59,6 @@
           text-left 
           shadow-xl 
           transition-all 
-          w-full 
           {sizeClasses[size]}
         "
         transition:scale={{ duration: 200, start: 0.95 }}
@@ -97,7 +96,7 @@
           {/if}
         </div>
 
-        <div class="p-4">
+        <div class="p-4 sm:p-6">
           <slot />
         </div>
       </div>

@@ -11,12 +11,12 @@
   
   const paddingClasses = {
     none: '',
-    sm: 'p-2',
-    md: 'p-4',
-    lg: 'p-6'
+    sm: 'p-2 md:p-3',
+    md: 'p-4 md:p-6',
+    lg: 'p-6 md:p-8'
   };
 </script>
 
-<div class="rounded-lg {variantClasses[variant]} {paddingClasses[padding]} {className}">
+<div class="rounded-lg w-full {variantClasses[variant]} {paddingClasses[padding]} {className}">
   <slot />
 </div> 

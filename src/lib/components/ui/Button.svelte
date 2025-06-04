@@ -8,7 +8,7 @@
   export let loading = false;
 
   const typeClasses = {
-    primary: 'bg-accent-primary hover:bg-accent-hover text-white',
+    primary: 'btn-gradient-accent btn-shadow-accent text-on-accent',
     secondary: 'bg-neutral-800 hover:bg-neutral-700 text-white',
     success: 'bg-success-bg hover:bg-success-bg/90 text-success-text',
     error: 'bg-error-bg hover:bg-error-bg/90 text-error-text',
@@ -17,9 +17,9 @@
   };
 
   const sizeClasses = {
-    sm: 'text-sm py-1 px-3',
-    md: 'text-base py-2 px-4',
-    lg: 'text-lg py-3 px-6'
+    sm: 'text-sm md:text-base py-1 px-2 md:px-3',
+    md: 'text-base md:text-lg py-2 px-3 md:px-4',
+    lg: 'text-lg md:text-xl py-3 px-4 md:px-6'
   };
 </script>
 
@@ -37,6 +37,7 @@
     focus:ring-offset-bg-primary
     disabled:opacity-50 
     disabled:cursor-not-allowed
+    w-full sm:w-auto
     {typeClasses[type]}
     {sizeClasses[size]}
     {fullWidth ? 'w-full' : ''}

@@ -94,7 +94,7 @@
   <!-- Stage (Layout principal) -->
   <div
     class="absolute inset-0 bg-black text-white transform origin-top-left transition-all duration-500 ease-in-out z-20 rounded-[2rem] md:rounded-[3rem]"
-    class:translate-x-[16rem]={$menu}
+    class:translate-x-[75%]={$menu}
     class:translate-y-[2.5rem]={$menu}
     class:md:translate-x-[30rem]={$menu}
     class:md:translate-y-[6.875rem]={$menu}
