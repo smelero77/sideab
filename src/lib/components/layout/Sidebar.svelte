@@ -28,7 +28,7 @@
     class="
         fixed top-0 left-0 z-10 
         h-full 
-        w-[75%] md:w-[500px]
+        w-[60%] md:w-[500px]
         text-white 
         p-0 flex flex-col
         font-['Barlow_Condensed',sans-serif]
@@ -36,7 +36,7 @@
     aria-hidden={!$menu}
     inert={!$menu}
 >
-    <nav class="fixed w-[75%] md:w-[500px] left-0 h-full py-12 md:py-20 z-0 text-[#cacaca] overflow-x-auto overflow-y-scroll scrollbar-none">
+    <nav class="fixed w-[60%] md:w-[500px] left-0 h-full py-12 md:py-20 z-0 text-[#cacaca] overflow-x-auto overflow-y-scroll scrollbar-none">
         <ul class="px-6 md:px-20 mt-16 md:mt-16">
             {#each menuItems as item, i}
                 <li class="font-['Barlow',sans-serif] font-semibold w-full text-[16px] md:text-[23px] {i > 0 ? 'border-t border-[#313131]' : ''}">
@@ -45,7 +45,7 @@
                         class="flex justify-between items-center w-full leading-[1.2] py-4 md:py-8 text-white hover:text-accent transition-colors duration-[0.22s] ease-out group no-underline"
                     >
                         {item.label}
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-3.5 h-3.5 md:w-5 md:h-5 text-white group-hover:text-accent transition-colors duration-[0.22s] ease-out ml-2 md:ml-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-3.5 h-3.5 md:w-5 md:h-5 text-white group-hover:text-accent transition-colors duration-[0.22s] ease-out ml-1 md:ml-2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                         </svg>
                     </a>
