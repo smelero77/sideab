@@ -21,12 +21,15 @@
     $: console.log('Estado del menú en sidebar:', $menu);
 </script>
 
+<!-- Fondo que ocupa toda la página -->
+<div class="fixed inset-0 bg-neutral-900 z-10" />
+
 <aside
     bind:this={sidebarElement}
     class="
         fixed top-0 left-0 z-10 
         h-full w-[500px]
-        bg-neutral-900 text-white 
+        text-white 
         p-0 flex flex-col
         font-['Barlow_Condensed',sans-serif]
     "
