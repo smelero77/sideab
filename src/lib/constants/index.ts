@@ -33,4 +33,21 @@ export const UI = {
     FAST: 'all 0.2s ease',
     SLOW: 'all 0.5s ease'
   }
-}; 
+};
+
+export const GENRES = [
+  'Blues',
+  'Brass & Military',
+  'Classical',
+  'Electronic',
+  'Folk, World, & Country',
+  'Funk / Soul',
+  'Hip-Hop',
+  'Jazz',
+  'Latin',
+  'Pop',
+  'Reggae',
+  'Rock'
+] as const;
+
+export type Genre = typeof GENRES[number]; 

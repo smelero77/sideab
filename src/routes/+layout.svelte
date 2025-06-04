@@ -9,6 +9,7 @@
   import ToastContainer from '$lib/components/ui/ToastContainer.svelte';
   import Card from '$lib/components/ui/Card/Card.svelte';
   import Logo from '$lib/components/ui/Logo.svelte';
+  import GenrePills from '$lib/components/ui/GenrePills.svelte';
 
   const gameManager = GameManager.getInstance();
 
@@ -104,8 +105,11 @@
   <div
     class="absolute inset-0 bg-black text-white z-20 rounded-[1.5rem] md:rounded-[3rem] stage-panel"
   >
-    <div class="h-full">
-      <slot />
+    <div class="h-full flex flex-col">
+      <GenrePills />
+      <div class="flex-1">
+        <slot />
+      </div>
     </div>
   </div>
 
