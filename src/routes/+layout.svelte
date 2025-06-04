@@ -32,7 +32,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
 </svelte:head>
 
-<div class="relative min-h-screen overflow-hidden">
+<div class="relative min-h-screen overflow-hidden p-4 md:p-8">
   <!-- Elementos flotantes -->
   <div class="fixed top-0 left-0 right-0 py-8 px-6 flex justify-between items-center z-50 pointer-events-none">
     <div class="flex items-center space-x-4 pointer-events-auto">
@@ -91,7 +91,7 @@
   
   <!-- Stage (Layout principal) -->
   <div
-    class="absolute inset-0 bg-black text-white transform origin-top-left transition-all duration-500 ease-in-out z-20 rounded-xl md:rounded-[20px]"
+    class="absolute inset-0 bg-black text-white transform origin-top-left transition-all duration-500 ease-in-out z-20 rounded-[2rem] md:rounded-[3rem]"
     class:translate-x-[16rem]={$menu}
     class:translate-y-[2.5rem]={$menu}
     class:md:translate-x-[30rem]={$menu}

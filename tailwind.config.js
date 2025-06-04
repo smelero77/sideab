@@ -4,17 +4,27 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Colores base
+        // Fondo y textos
+        'bg': 'var(--color-bg)',
+        'text': 'var(--color-text)',
+        'text-secondary': 'var(--color-text-secondary)',
+        
+        // Color de acento
+        'accent': 'var(--color-accent)',
+        
+        // Grises de soporte
+        'grey-dark': 'var(--grey-dark)',
+        'grey-border': 'var(--grey-border)',
+        
+        // Mapeo a variables existentes para mantener compatibilidad
         'bg-primary': 'var(--bg-primary)',
         'bg-secondary': 'var(--bg-secondary)',
         'bg-tertiary': 'var(--bg-tertiary)',
         
-        // Colores de texto
         'text-primary': 'var(--text-primary)',
         'text-secondary': 'var(--text-secondary)',
         'text-tertiary': 'var(--text-tertiary)',
         
-        // Colores de acento
         'accent-primary': 'var(--accent-primary)',
         'accent-hover': 'var(--accent-hover)',
         'accent-active': 'var(--accent-active)',

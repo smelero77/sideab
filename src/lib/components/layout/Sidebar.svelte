@@ -1,7 +1,6 @@
 <script lang="ts">
     import { menu } from '$lib/stores/menuStore';
     import { clickOutside } from '$lib/actions/clickOutside';
-    import Logo from '$lib/components/ui/Logo.svelte';
 
     const menuItems = [
         { href: '#premium', label: 'Premium' },
@@ -41,12 +40,8 @@
     aria-hidden={!$menu}
     inert={!$menu}
 >
-    <div class="flex items-center justify-between mt-8 px-20">
-        <Logo size="lg" variant="primary" />
-    </div>
-
     <nav class="fixed w-[500px] left-0 h-full py-20 z-0 text-[#cacaca] overflow-x-auto overflow-y-scroll scrollbar-none">
-        <ul class="px-20 mt-16">
+        <ul class="px-20 mt-8">
             {#each menuItems as item, i}
                 <li class="font-['Barlow',sans-serif] font-semibold w-full text-[20px] md:text-[23px] border-t border-[#313131]">
                     <a 
