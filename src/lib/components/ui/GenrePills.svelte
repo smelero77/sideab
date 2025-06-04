@@ -43,7 +43,7 @@
   }
 </script>
 
-<nav class="w-full py-20 px-4 md:px-8 relative">
+<nav class="w-full py-20 md:py-24 lg:py-28 px-4 md:px-8 relative">
   <div
     class="flex overflow-x-auto no-scrollbar space-x-3"
     use:dragScroll
