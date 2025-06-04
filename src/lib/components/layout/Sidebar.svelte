@@ -21,7 +21,7 @@
 </script>
 
 <!-- Fondo que ocupa toda la página (solo visual) -->
-<div class="fixed inset-0 bg-neutral-900 z-10" />
+<div class="fixed inset-0 bg-neutral-900 z-10" style="opacity: var(--menu-progress);" />
 
 <aside
     bind:this={sidebarElement}
@@ -33,6 +33,7 @@
         p-0 flex flex-col
         font-['Barlow_Condensed',sans-serif]
     "
+    style="opacity: var(--menu-progress);"
     aria-hidden={!$menu}
     inert={!$menu}
 >
@@ -42,10 +43,10 @@
                 <li class="font-['Barlow',sans-serif] font-semibold w-full text-[16px] md:text-[23px] {i > 0 ? 'border-t border-[#313131]' : ''}">
                     <a 
                         href={item.href} 
-                        class="flex justify-between items-center w-full leading-[1.2] py-4 md:py-8 text-white hover:text-accent transition-colors duration-[0.22s] ease-out group no-underline"
+                        class="menu-link flex justify-between items-center w-full leading-[1.2] py-4 md:py-8 transition-colors duration-[0.22s] ease-out group no-underline"
                     >
                         {item.label}
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-3.5 h-3.5 md:w-5 md:h-5 text-white group-hover:text-accent transition-colors duration-[0.22s] ease-out ml-1 md:ml-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-3.5 h-3.5 md:w-5 md:h-5 transition-colors duration-[0.22s] ease-out ml-1 md:ml-2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                         </svg>
                     </a>
@@ -58,7 +59,7 @@
                     <li class="font-['Barlow',sans-serif] font-semibold w-full text-[14px] md:text-[18px]">
                         <a 
                             href={item.href} 
-                            class="flex items-center w-full leading-[1.2] py-2 md:py-3 text-white hover:text-accent transition-colors duration-[0.22s] ease-out no-underline"
+                            class="menu-link transition-colors duration-[0.22s] ease-out no-underline"
                         >
                             {item.label}
                         </a>
@@ -82,5 +83,30 @@
     }
     .scrollbar-none::-webkit-scrollbar {
         display: none;
+    }
+
+    /* 
+        Definimos que .menu-link (el <a> de cada item)
+        tenga un color base "apagado" cuando --menu-progress = 0,
+        y un color "iluminado" cuando --menu-progress = 1.
+    */
+    .menu-link {
+        color: rgba(255, 255, 255, calc(0.2 + 0.8 * var(--menu-progress)));
+        transition: color 500ms ease;
+    }
+
+    .menu-link:hover {
+        color: rgba(255, 255, 255, calc(0.3 + 0.7 * var(--menu-progress)));
+    }
+
+    /* Cambiamos también el color del icono SVG al mismo ritmo */
+    .menu-link svg {
+        stroke: rgba(255, 255, 255, var(--menu-progress));
+        transition: stroke 500ms ease;
+    }
+
+    /* Aseguramos que las transiciones sean suaves */
+    aside, .fixed.inset-0 {
+        transition: opacity 500ms ease-in-out;
     }
 </style> 

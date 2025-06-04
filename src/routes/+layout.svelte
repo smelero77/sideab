@@ -32,9 +32,18 @@
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
 </svelte:head>
 
-<div class="relative min-h-screen overflow-hidden p-2 md:p-8">
+<!-- 
+  Aquí inyectamos la variable CSS --menu-progress
+  que vale 0 cuando $menu=false, y 1 cuando $menu=true.
+-->
+<div
+  class="relative min-h-screen overflow-hidden p-2 md:p-8"
+  style="--menu-progress: {$menu ? 1 : 0};"
+>
   <!-- Elementos flotantes -->
-  <div class="fixed top-0 left-0 right-0 py-4 md:py-8 px-4 md:px-6 flex justify-between items-center z-50 pointer-events-none">
+  <div
+    class="fixed top-0 left-0 right-0 py-4 md:py-8 px-4 md:px-6 flex justify-between items-center z-50 pointer-events-none"
+  >
     <div class="flex items-center space-x-2 md:space-x-4 pointer-events-auto">
       <button
         on:click={() => menu.toggle()}
@@ -90,14 +99,10 @@
       </button>
     </div>
   </div>
-  
+
   <!-- Stage (Layout principal) -->
   <div
-    class="absolute inset-0 bg-black text-white transform origin-top-left transition-all duration-500 ease-in-out z-20 rounded-[1.5rem] md:rounded-[3rem]"
-    class:translate-x-[60%]={$menu}
-    class:translate-y-[5rem]={$menu}
-    class:md:translate-x-[30rem]={$menu}
-    class:md:translate-y-[6.875rem]={$menu}
+    class="absolute inset-0 bg-black text-white z-20 rounded-[1.5rem] md:rounded-[3rem] stage-panel"
   >
     <div class="h-full">
       <slot />
@@ -122,5 +127,19 @@
     will-change: transform;
     backface-visibility: hidden;
     transform-style: preserve-3d;
+  }
+
+  /* Estilos para el Stage */
+  .stage-panel {
+    transition: transform 500ms ease-in-out;
+    transform: translateX(calc(var(--menu-progress) * 60%))
+               translateY(calc(var(--menu-progress) * 5rem));
+  }
+
+  @media (min-width: 768px) {
+    .stage-panel {
+      transform: translateX(calc(var(--menu-progress) * 30rem))
+                 translateY(calc(var(--menu-progress) * 6.875rem));
+    }
   }
 </style> 
