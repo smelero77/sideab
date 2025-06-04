@@ -33,6 +33,21 @@ export const timer = derived(gameState, $gameState => $gameState.timer);
 export const currentQuestion = derived(gameState, $gameState => $gameState.currentQuestion);
 export const isGameOver = derived(gameState, $gameState => $gameState.isGameOver);
 
+// Store para controlar el efecto de desenfoque de la imagen
+export const blurAmount = writable<number>(0);
+
+// Store para controlar si se ha respondido la pregunta actual
+export const answered = writable<boolean>(false);
+
+// Store para almacenar la respuesta del usuario
+export const userAnswer = writable<string | null>(null);
+
+// Store para el porcentaje del timer
+export const timerPercentage = derived(timer, $timer => {
+  const maxTime = 30; // Tiempo máximo en segundos
+  return Math.max(0, Math.min(100, ($timer / maxTime) * 100));
+});
+
 // Métodos para actualizar el estado
 export function updateGameState(newState: Partial<GameState>) {
   gameState.update(state => ({ ...state, ...newState }));

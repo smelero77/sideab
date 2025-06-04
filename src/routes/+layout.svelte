@@ -33,38 +33,29 @@
 </svelte:head>
 
 <div class="relative min-h-screen overflow-hidden">
-  <!-- 1) Header → z-30, bg-neutral-900 (idéntico al fondo de la Sidebar) -->
+  <!-- 1) Header → z-30, bg-neutral-900 -->
   <div class="fixed top-0 left-0 right-0 z-30">
     <Header />
   </div>
   
-  <!-- 2) Sidebar/Menu → z-10, bg-neutral-900 (idéntico al Header) -->
+  <!-- 2) Sidebar/Menu → z-10, bg-neutral-900 -->
   <Sidebar />
   
-  <!-- 3) Stage (Layout principal) → z-20, bg-black (#000000), sin sombra -->
+  <!-- 3) Stage (Layout principal) → z-20, bg-black (#000000) -->
   <div
-    class="
-      absolute inset-0 
-      z-20 
-      bg-black 
-      text-white 
-      transform origin-top-left 
-      transition-all duration-500 ease-in-out
-      {$menu ? 'translate-x-[420px] translate-y-[2.5rem] scale-[0.8] rounded-xl md:translate-x-[520px] md:translate-y-[6.875rem] md:rounded-[20px]' : 'translate-x-0 translate-y-0 scale-100 rounded-none'}
-    "
-    on:click|stopPropagation={() => $menu && menu.close()}
-    on:keydown|stopPropagation={(e) => {
-      if ($menu && (e.key === 'Escape' || e.key === 'Enter')) {
-        menu.close();
-      }
+    class="absolute inset-0 z-20 bg-black text-white transform origin-top-left transition-transform duration-500 ease-in-out translate-x-0 translate-y-0 rounded-none"
+    class:translate-x-[16rem]={$menu}
+    class:translate-y-[2.5rem]={$menu}
+    class:rounded-xl={$menu}
+    class:md:translate-x-[30rem]={$menu}
+    class:md:translate-y-[6.875rem]={$menu}
+    class:md:rounded-[20px]={$menu}
+    on:click|stopPropagation={() => {
+      if ($menu) menu.close();
     }}
-    role="button"
-    tabindex="0"
   >
-    <div class="pt-[4rem]"> 
-      <Card variant="elevated" padding="lg">
-        <slot />
-      </Card>
+    <div class="pt-[4rem]">
+      <slot />
     </div>
   </div>
 </div>
@@ -78,7 +69,7 @@
     --accent-color: #a78bfa;
   }
 
-  /* Aseguramos que las transformaciones se apliquen correctamente */
+  /* Aseguramos que la propiedad transform rinda bien */
   :global(.transform) {
     will-change: transform;
     backface-visibility: hidden;

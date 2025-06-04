@@ -38,17 +38,17 @@
     aria-hidden={!$menu}
     inert={!$menu}
 >
-    <div class="flex items-center justify-between mb-12">
+    <div class="flex items-center justify-between mt-8 px-20">
         <Logo size="lg" variant="primary" />
     </div>
 
     <nav class="fixed w-[500px] left-0 h-full py-20 z-0 text-[#cacaca] overflow-x-auto overflow-y-scroll scrollbar-none">
-        <ul class="px-20 mt-8">
+        <ul class="px-20 mt-16">
             {#each menuItems as item, i}
                 <li class="font-['Barlow',sans-serif] font-semibold w-full text-[20px] md:text-[23px] border-t border-[#313131]">
                     <a 
                         href={item.href} 
-                        class="flex justify-between items-center w-full leading-[1.2] py-6 text-white transition-colors duration-[0.22s] ease-out"
+                        class="flex justify-between items-center w-full leading-[1.2] py-8 text-white transition-colors duration-[0.22s] ease-out"
                     >
                         {item.label}
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500">
@@ -58,13 +58,13 @@
                 </li>
             {/each}
         </ul>
-        <div class="mt-10 pt-10 px-20">
+        <div class="mt-8 pt-6 px-20">
             <ul>
                 {#each otherLinks as item, i}
                     <li class="font-['Barlow',sans-serif] font-semibold w-full text-[18px]">
                         <a 
                             href={item.href} 
-                            class="flex justify-between items-center w-full leading-[1.2] py-4 text-[#cacaca] hover:text-white transition-colors duration-[0.22s] ease-out"
+                            class="flex justify-between items-center w-full leading-[1.2] py-3 text-[#cacaca] hover:text-white transition-colors duration-[0.22s] ease-out"
                         >
                             {item.label}
                         </a>
