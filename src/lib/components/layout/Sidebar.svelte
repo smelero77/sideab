@@ -36,7 +36,7 @@
     inert={!$menu}
 >
     <nav class="fixed w-[500px] left-0 h-full py-20 z-0 text-[#cacaca] overflow-x-auto overflow-y-scroll scrollbar-none">
-        <ul class="px-20 mt-8">
+        <ul class="px-20 mt-16">
             {#each menuItems as item, i}
                 <li class="font-['Barlow',sans-serif] font-semibold w-full text-[20px] md:text-[23px] border-t border-[#313131]">
                     <a 

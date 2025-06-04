@@ -14,6 +14,6 @@
   };
 </script>
 
-<h1 class="font-bold {sizeClasses[size]} {variantClasses[variant]} font-['Barlow_Condensed',sans-serif] tracking-wider">
+<h1 class="font-bold {sizeClasses[size]} {variantClasses[variant]} font-['Barlow_Condensed',sans-serif] tracking-wider leading-none flex items-center">
   SIDE<span class="text-accent">A</span><span class="text-accent">B</span>
 </h1> 

@@ -67,7 +67,9 @@
           </svg>
         {/if}
       </button>
-      <Logo size="md" variant="primary" />
+      <div class="flex items-center translate-y-1">
+        <Logo size="md" variant="primary" />
+      </div>
     </div>
 
     <div class="flex items-center space-x-4 pointer-events-auto">
