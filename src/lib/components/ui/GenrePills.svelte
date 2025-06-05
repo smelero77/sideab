@@ -77,7 +77,7 @@
           font-bold
           relative
           {$selectedGenre === genre 
-            ? 'text-neutral-600 animate-gradient-border' 
+            ? 'text-accent border-gradient-anim' 
             : 'bg-transparent border-2 border-neutral-600 text-neutral-600 hover:bg-neutral-600/10'}
         "
         aria-pressed={$selectedGenre === genre}
@@ -104,7 +104,7 @@
             font-bold
             relative
             {$selectedStyle === style 
-              ? 'text-neutral-600 animate-gradient-border' 
+              ? 'text-accent border-gradient-anim' 
               : 'bg-transparent border-2 border-neutral-600 text-neutral-600 hover:bg-neutral-600/10'}
           "
           aria-pressed={$selectedStyle === style}
@@ -136,7 +136,7 @@
     display: none;
   }
 
-  @keyframes gradient {
+  @keyframes border-gradient-move {
     0% {
       background-position: 0% 50%;
     }
@@ -148,31 +148,19 @@
     }
   }
 
-  .animate-gradient-border {
-    background: transparent;
-    position: relative;
-    border: none;
+  .border-gradient-anim {
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 9999px;
+    border-image: linear-gradient(90deg, var(--color-accent), #3b82f6, var(--color-accent)) 1;
+    animation: border-gradient-move 3s ease infinite;
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    color: var(--color-accent);
   }
 
-  .animate-gradient-border::before {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    border-radius: 9999px;
-    padding: 2px;
-    background: linear-gradient(90deg, 
-      transparent 0%,
-      var(--color-accent) 20%,
-      var(--color-accent) 80%,
-      transparent 100%
-    );
-    background-size: 200% 200%;
-    animation: gradient 3s ease infinite;
-    -webkit-mask: 
-      linear-gradient(#fff 0 0) content-box, 
-      linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
+  .text-accent {
+    color: var(--color-accent) !important;
   }
 
   .progress-indicator-wrapper {
