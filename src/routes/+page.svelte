@@ -35,54 +35,35 @@
 
 <main class="min-h-screen bg-black text-white">
   <div class="container mx-auto px-4 py-8">
-    {#if !$selectedGameType}
-      <Card 
-        variant="elevated" 
-        padding="lg" 
-        className="max-w-md mx-auto space-y-8"
-      >
-        <CategorySelect />
+    <Card 
+      variant="elevated" 
+      padding="lg" 
+      className="max-w-2xl mx-auto space-y-6 ocultar"
+    >
+      <div class="flex justify-between items-center">
+        <LivesDisplay />
+        <ScoreDisplay />
+      </div>
+      
+      <TimerBar />
+      
+      <div class="flex flex-col md:flex-row items-start md:space-x-8">
+        <CoverReveal className="md:w-1/2" />
         
-        <Button 
-          variant="primary"
-          size="lg"
-          fullWidth
-          on:click={startGame}
-        >
-          Comenzar Quiz
-        </Button>
-      </Card>
-    {:else}
-      <Card 
-        variant="elevated" 
-        padding="lg" 
-        className="max-w-2xl mx-auto space-y-6"
-      >
-        <div class="flex justify-between items-center">
-          <LivesDisplay />
-          <ScoreDisplay />
+        <div class="md:w-1/2 mt-6 md:mt-0">
+          {#if gameManager.currentGame?.currentQuestion}
+            <div class="space-y-2">
+              {#each gameManager.currentGame.currentQuestion.options as option}
+                <OptionButton 
+                  title={option} 
+                  on:select={(e) => handleAnswer(e.detail)}
+                />
+              {/each}
+            </div>
+          {/if}
         </div>
-        
-        <TimerBar />
-        
-        <div class="flex flex-col md:flex-row items-start md:space-x-8">
-          <CoverReveal className="md:w-1/2" />
-          
-          <div class="md:w-1/2 mt-6 md:mt-0">
-            {#if gameManager.currentGame?.currentQuestion}
-              <div class="space-y-2">
-                {#each gameManager.currentGame.currentQuestion.options as option}
-                  <OptionButton 
-                    title={option} 
-                    on:select={(e) => handleAnswer(e.detail)}
-                  />
-                {/each}
-              </div>
-            {/if}
-          </div>
-        </div>
-      </Card>
-    {/if}
+      </div>
+    </Card>
   </div>
 </main>
 
@@ -91,3 +72,9 @@
     <GameOverModal />
   </div>
 {/if}
+
+<style>
+.ocultar {
+  display: none !important;
+}
+</style>

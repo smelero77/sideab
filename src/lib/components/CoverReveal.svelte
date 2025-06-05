@@ -19,7 +19,7 @@
   }
 </script>
 
-<div class="relative w-64 h-64 mx-auto overflow-hidden rounded-2xl shadow-2xl {className}">
+<div class="relative w-64 h-64 mx-auto overflow-hidden rounded-2xl shadow-2xl {className} ocultar">
   {#if $currentQuestion}
     {#key $currentQuestion.imageUrl}
       {#if isLoading}
@@ -50,7 +50,7 @@
     {/key}
   {:else}
     <div class="w-full h-full bg-gray-800 flex items-center justify-center">
-      <p class="text-gray-400">Selecciona una categoría para comenzar</p>
+      <!-- Dejar vacío si no hay pregunta actual -->
     </div>
   {/if}
 </div>
@@ -69,5 +69,9 @@
 
   .error {
     opacity: 0.5;
+  }
+
+  .ocultar {
+    display: none !important;
   }
 </style> 

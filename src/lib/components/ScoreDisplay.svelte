@@ -10,7 +10,7 @@
   }
 </script>
 
-<div class="text-2xl font-bold text-indigo-500 flex items-center space-x-2">
+<div class="text-2xl font-bold text-indigo-500 flex items-center space-x-2 ocultar">
   <span class="relative inline-block">
     <span 
       class="inline-block transition-transform duration-200 ease-out"
@@ -25,5 +25,8 @@
 <style>
   .scale-110 {
     transform: scale(1.1);
+  }
+  .ocultar {
+    display: none !important;
   }
 </style> 

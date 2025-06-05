@@ -3,7 +3,7 @@
   import { fade } from 'svelte/transition';
 </script>
 
-<div class="flex items-center space-x-2">
+<div class="flex items-center space-x-2 ocultar">
   {#each Array($lives) as _, i}
     <svg 
       class="w-6 h-6 text-red-500" 
@@ -25,5 +25,9 @@
 
   svg {
     animation: heartbeat 0.6s ease-in-out;
+  }
+
+  .ocultar {
+    display: none !important;
   }
 </style> 

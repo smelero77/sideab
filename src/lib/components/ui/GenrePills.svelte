@@ -9,26 +9,29 @@
   // Array de nombres de géneros (ordenados alfabéticamente)
   const genres = Object.keys(genreData).sort((a, b) => a.localeCompare(b)) as Genre[];
 
-  // Estado para el progreso de scroll
+  // Estado para el progreso de scroll (0 a 1)
   let scrollProgress = 0;
   let pillsContainer: HTMLDivElement;
+  let stylesContainer: HTMLDivElement;
 
-  function updateScrollProgress() {
-    if (!pillsContainer) return;
-    const maxScroll = pillsContainer.scrollWidth - pillsContainer.clientWidth;
+  function updateScrollProgress(container: HTMLDivElement) {
+    if (!container) return;
+    const maxScroll = container.scrollWidth - container.clientWidth;
     if (maxScroll <= 0) {
       scrollProgress = 0;
       return;
     }
-    scrollProgress = pillsContainer.scrollLeft / maxScroll;
+    scrollProgress = container.scrollLeft / maxScroll;
   }
 
-  // Actualizar al hacer scroll o redimensionar
-  function handleScroll() {
-    updateScrollProgress();
+  function handleScroll(event: Event) {
+    const container = event.target as HTMLDivElement;
+    updateScrollProgress(container);
   }
+
   function handleResize() {
-    updateScrollProgress();
+    if (pillsContainer) updateScrollProgress(pillsContainer);
+    if (stylesContainer) updateScrollProgress(stylesContainer);
   }
 
   function handleGenreClick(genre: Genre) {
@@ -56,43 +59,19 @@
 </script>
 
 <nav class="w-full py-20 md:py-24 lg:py-28 px-4 md:px-8 relative">
-  <!-- Géneros principales -->
-  <div
-    class="flex overflow-x-auto no-scrollbar space-x-2 md:justify-center md:overflow-x-visible"
-    use:dragScroll
-    bind:this={pillsContainer}
-    on:scroll={handleScroll}
-  >
-    {#each genres as genre}
-      <button
-        on:click={() => handleGenreClick(genre)}
-        class="
-          whitespace-nowrap
-          px-3 py-1.5 
-          rounded-full 
-          transition-colors 
-          flex-shrink-0
-          text-sm
-          font-sans
-          font-bold
-          relative
-          {$selectedGenre === genre 
-            ? 'text-accent border-gradient-anim' 
-            : 'bg-transparent border-2 border-neutral-600 text-neutral-600 hover:bg-neutral-600/10'}
-        "
-        aria-pressed={$selectedGenre === genre}
-      >
-        {genre}
-      </button>
-    {/each}
-  </div>
-
-  <!-- Subgéneros (estilos) -->
-  {#if $selectedGenre && $selectedGenre !== 'All'}
-    <div class="flex overflow-x-auto no-scrollbar space-x-2 mt-3 md:justify-center md:overflow-x-visible">
-      {#each genreData[$selectedGenre] as style}
+  <!-- WRAPPER de Géneros con "overlay" en los laterales -->
+  <div class="pill-wrapper relative">
+    <!-- Contenedor de pills (géneros) -->
+    <div
+      class="pill-container flex overflow-x-auto no-scrollbar space-x-2 md:justify-center md:overflow-x-visible relative z-10"
+      use:dragScroll
+      bind:this={pillsContainer}
+      on:scroll={handleScroll}
+      on:resize={handleResize}
+    >
+      {#each genres as genre}
         <button
-          on:click={() => handleStyleClick(style)}
+          on:click={() => handleGenreClick(genre)}
           class="
             whitespace-nowrap
             px-3 py-1.5 
@@ -103,19 +82,63 @@
             font-sans
             font-bold
             relative
-            {$selectedStyle === style 
+            {$selectedGenre === genre 
               ? 'text-accent border-gradient-anim' 
               : 'bg-transparent border-2 border-neutral-600 text-neutral-600 hover:bg-neutral-600/10'}
           "
-          aria-pressed={$selectedStyle === style}
+          aria-pressed={$selectedGenre === genre}
         >
-          {style}
+          {genre}
         </button>
       {/each}
     </div>
+
+    <!-- Capa "desvanecida" a la izquierda -->
+    <div class="fade-edge left md:hidden" class:invisible={scrollProgress <= 0}></div>
+    <!-- Capa "desvanecida" a la derecha -->
+    <div class="fade-edge right md:hidden" class:invisible={scrollProgress >= 1}></div>
+  </div>
+
+  <!-- Subgéneros (estilos) -->
+  {#if $selectedGenre && $selectedGenre !== 'All'}
+    <div class="pill-wrapper mt-3 relative">
+      <div
+        class="pill-container flex overflow-x-auto no-scrollbar space-x-2 md:justify-center md:overflow-x-visible relative z-10"
+        use:dragScroll
+        bind:this={stylesContainer}
+        on:scroll={handleScroll}
+        on:resize={handleResize}
+      >
+        {#each genreData[$selectedGenre] as style}
+          <button
+            on:click={() => handleStyleClick(style)}
+            class="
+              whitespace-nowrap
+              px-3 py-1.5 
+              rounded-full 
+              transition-colors 
+              flex-shrink-0
+              text-sm
+              font-sans
+              font-bold
+              relative
+              {$selectedStyle === style 
+                ? 'text-accent border-gradient-anim' 
+                : 'bg-transparent border-2 border-neutral-600 text-neutral-600 hover:bg-neutral-600/10'}
+            "
+            aria-pressed={$selectedStyle === style}
+          >
+            {style}
+          </button>
+        {/each}
+      </div>
+
+      <div class="fade-edge left md:hidden" class:invisible={scrollProgress <= 0}></div>
+      <div class="fade-edge right md:hidden" class:invisible={scrollProgress >= 1}></div>
+    </div>
   {/if}
 
-  <!-- Indicador de progreso debajo de las pills -->
+  <!-- Indicador de progreso debajo de las pills (sólo para pantallas < md) -->
   <div class="progress-indicator-wrapper">
     <div class="progress-indicator-bg">
       <div class="progress-indicator-fill" style="width: {Math.max(8, scrollProgress * 100)}%"></div>
@@ -126,8 +149,10 @@
 <style>
   :global(:root) {
     --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --fade-width: 1.5rem; /* Tamaño horizontal del degradado */
+    --fade-color: rgba(0, 0, 0, 1); /* Color de fondo sólido */
   }
-  
+
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -163,6 +188,47 @@
     color: var(--color-accent) !important;
   }
 
+  /* CONTENEDOR que envuelve cada "fila" de pills y las capas de desenfoque */
+  .pill-wrapper {
+    position: relative;
+  }
+
+  /* Contenedor real de pills (con scroll) */
+  .pill-container {
+    /* Ya tenía: flex, overflow-x-auto, no scrollbar, spacing, etc. */
+  }
+
+  /* CAPAS GRADUALES para "desvanecer" los extremos */
+  .fade-edge {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: var(--fade-width);
+    pointer-events: none;
+    z-index: 20;
+    transition: opacity 0.3s ease;
+  }
+
+  /* Gradiente desde el color de fondo (negro) hacia transparente */
+  .fade-edge.left {
+    left: 0;
+    background: linear-gradient(to right, var(--fade-color), transparent);
+  }
+  .fade-edge.right {
+    right: 0;
+    background: linear-gradient(to left, var(--fade-color), transparent);
+  }
+
+  /* Cuando scroll está al inicio o final, ocultamos la capa correspondiente */
+  .fade-edge.invisible {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .fade-edge:not(.invisible) {
+    opacity: 1;
+  }
+
+  /* Estilos del indicador de progreso (igual que antes) */
   .progress-indicator-wrapper {
     position: relative;
     margin: 0 auto;
@@ -178,16 +244,16 @@
   .progress-indicator-bg {
     width: 100%;
     height: 3px;
-    background: rgba(180,180,180,0.22);
+    background: rgba(180, 180, 180, 0.22);
     border-radius: 2px;
     overflow: hidden;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.13);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.13);
   }
   .progress-indicator-fill {
     height: 100%;
     background: #fff;
     border-radius: 2px;
-    transition: width 0.25s cubic-bezier(.4,1,.4,1);
+    transition: width 0.25s cubic-bezier(.4, 1, .4, 1);
     min-width: 8px;
     max-width: 100%;
   }
