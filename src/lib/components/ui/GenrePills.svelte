@@ -2,10 +2,12 @@
 <script lang="ts">
   import { page } from '$app/stores';
   import { goto } from '$app/navigation';
-  import { GENRES } from '$lib/constants';
-  import { selectedGenre } from '$lib/stores/genreStore';
-  import type { Genre } from '$lib/constants';
+  import { genreData } from '$lib/data/genres';
+  import { selectedGenre, selectedStyle, type Genre, type Style } from '$lib/stores/genreStore';
   import dragScroll from '$lib/actions/dragScroll';
+
+  // Array de nombres de géneros (ordenados alfabéticamente)
+  const genres = Object.keys(genreData).sort((a, b) => a.localeCompare(b)) as Genre[];
 
   // Estado para el progreso de scroll
   let scrollProgress = 0;
@@ -31,38 +33,52 @@
 
   function handleGenreClick(genre: Genre) {
     selectedGenre.set(genre);
+    selectedStyle.set(null);
     goto(`?genre=${encodeURIComponent(genre)}`, { replaceState: true });
+  }
+
+  function handleStyleClick(style: Style) {
+    selectedStyle.set(style);
+    goto(`?genre=${encodeURIComponent($selectedGenre)}&style=${encodeURIComponent(style)}`, { replaceState: true });
   }
 
   // Sincronizar con la URL al cargar
   $: {
     const urlGenre = $page.url.searchParams.get('genre');
-    if (urlGenre && GENRES.includes(urlGenre as Genre)) {
+    const urlStyle = $page.url.searchParams.get('style');
+    if (urlGenre && genres.includes(urlGenre as Genre)) {
       selectedGenre.set(urlGenre as Genre);
+      if (urlStyle && genreData[urlGenre as Genre].includes(urlStyle)) {
+        selectedStyle.set(urlStyle as Style);
+      }
     }
   }
 </script>
 
 <nav class="w-full py-20 md:py-24 lg:py-28 px-4 md:px-8 relative">
+  <!-- Géneros principales -->
   <div
-    class="flex overflow-x-auto no-scrollbar space-x-3 md:justify-center md:overflow-x-visible"
+    class="flex overflow-x-auto no-scrollbar space-x-2 md:justify-center md:overflow-x-visible"
     use:dragScroll
     bind:this={pillsContainer}
     on:scroll={handleScroll}
   >
-    {#each GENRES as genre}
+    {#each genres as genre}
       <button
         on:click={() => handleGenreClick(genre)}
         class="
           whitespace-nowrap
-          px-4 py-2 
+          px-3 py-1.5 
           rounded-full 
-          font-semibold 
           transition-colors 
           flex-shrink-0
+          text-sm
+          font-sans
+          font-bold
+          relative
           {$selectedGenre === genre 
-            ? 'bg-yellow-500 text-black' 
-            : 'bg-neutral-700/50 text-white hover:bg-neutral-600/50'}
+            ? 'text-neutral-600 animate-gradient-border' 
+            : 'bg-transparent border-2 border-neutral-600 text-neutral-600 hover:bg-neutral-600/10'}
         "
         aria-pressed={$selectedGenre === genre}
       >
@@ -70,6 +86,35 @@
       </button>
     {/each}
   </div>
+
+  <!-- Subgéneros (estilos) -->
+  {#if $selectedGenre && $selectedGenre !== 'All'}
+    <div class="flex overflow-x-auto no-scrollbar space-x-2 mt-3 md:justify-center md:overflow-x-visible">
+      {#each genreData[$selectedGenre] as style}
+        <button
+          on:click={() => handleStyleClick(style)}
+          class="
+            whitespace-nowrap
+            px-3 py-1.5 
+            rounded-full 
+            transition-colors 
+            flex-shrink-0
+            text-sm
+            font-sans
+            font-bold
+            relative
+            {$selectedStyle === style 
+              ? 'text-neutral-600 animate-gradient-border' 
+              : 'bg-transparent border-2 border-neutral-600 text-neutral-600 hover:bg-neutral-600/10'}
+          "
+          aria-pressed={$selectedStyle === style}
+        >
+          {style}
+        </button>
+      {/each}
+    </div>
+  {/if}
+
   <!-- Indicador de progreso debajo de las pills -->
   <div class="progress-indicator-wrapper">
     <div class="progress-indicator-bg">
@@ -79,6 +124,10 @@
 </nav>
 
 <style>
+  :global(:root) {
+    --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -86,6 +135,46 @@
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
+
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .animate-gradient-border {
+    background: transparent;
+    position: relative;
+    border: none;
+  }
+
+  .animate-gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 9999px;
+    padding: 2px;
+    background: linear-gradient(90deg, 
+      transparent 0%,
+      var(--color-accent) 20%,
+      var(--color-accent) 80%,
+      transparent 100%
+    );
+    background-size: 200% 200%;
+    animation: gradient 3s ease infinite;
+    -webkit-mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
   .progress-indicator-wrapper {
     position: relative;
     margin: 0 auto;

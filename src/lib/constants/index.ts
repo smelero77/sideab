@@ -35,19 +35,4 @@ export const UI = {
   }
 };
 
-export const GENRES = [
-  'Blues',
-  'Brass & Military',
-  'Classical',
-  'Electronic',
-  'Folk, World, & Country',
-  'Funk / Soul',
-  'Hip-Hop',
-  'Jazz',
-  'Latin',
-  'Pop',
-  'Reggae',
-  'Rock'
-] as const;
-
-export type Genre = typeof GENRES[number]; 
+// Eliminamos la definición antigua de géneros ya que ahora usamos src/lib/data/genres.ts 
