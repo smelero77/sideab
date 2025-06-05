@@ -45,7 +45,7 @@
 
 <nav class="w-full py-20 md:py-24 lg:py-28 px-4 md:px-8 relative">
   <div
-    class="flex overflow-x-auto no-scrollbar space-x-3"
+    class="flex overflow-x-auto no-scrollbar space-x-3 md:justify-center md:overflow-x-visible"
     use:dragScroll
     bind:this={pillsContainer}
     on:scroll={handleScroll}
@@ -113,5 +113,11 @@
     transition: width 0.25s cubic-bezier(.4,1,.4,1);
     min-width: 8px;
     max-width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    .progress-indicator-wrapper {
+      display: none;
+    }
   }
 </style> 
